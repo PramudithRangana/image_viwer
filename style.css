@@ -1,0 +1,228 @@
+* {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --pos_1 : relative;
+    --time_dur : 20s;
+    --animate_pattern: 0.15, 0.85, 0.25, 1
+}
+
+body {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: silver;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 950px;
+    background: #282C34;
+    perspective: 1500px;
+    border: 1px black solid;
+}
+
+.container .imgFrame {
+    position: var(--pos_1);
+    width: 400px;
+    height: 560px;
+    border-radius: 10px;
+    transform-style: preserve-3d;
+    background-size: cover;
+    background-position: center;
+}
+
+.cover {
+    position: absolute;
+    width: 400px; /* Book width */
+    height: 560px; /* Book height */
+    background-color: #ffebcd; /* Default cover color */
+    border: 1px solid #ccc;
+    background-size: cover; /* Ensure the image covers the entire element */
+    background-position: center; /* Center the background image */
+}
+
+.front {
+    transform: translateZ(10px); /* Front cover thickness */
+    background-image: url('public/default_imgs/back-side.jpg'); /* Replace with your image path */
+}
+
+.back {
+    transform: rotateY(180deg) translateZ(10px); /* Back cover thickness */
+    background-image: url('public/default_imgs/back-side.jpg'); /* Replace with your image path */
+}
+
+.spine-left {
+    position: absolute;
+    width: 20px; /* Spine width */
+    height: 560px; /* Book height */
+    background-color: #000000; /* Spine color */
+    transform: rotateY(90deg) translateZ(-100px); /* Left spine positioning */
+    left: 90px; /* Adjust based on the spine width */
+}
+
+.spine-right {
+    position: absolute;
+    width: 20px; /* Spine width */
+    height: 560px; /* Book height */
+    background-color: #000000; /* Spine color */
+    transform: rotateY(90deg) translateZ(100px); /* Right spine positioning */
+    right: 90px; /* Adjust based on the spine width */
+}
+
+.side {
+    position: absolute;
+    width: 400px; /* Book width */
+    height: 20px; /* Thickness of the book */
+    background-color: #000000; /* Edge color */
+}
+
+.top {
+    transform: rotateX(90deg) translateZ(150px); /* Top edge positioning */
+    top: 140px; /* Adjust based on the thickness */
+}
+
+.bottom {
+    transform: rotateX(-90deg) translateZ(150px); /* Bottom edge positioning */
+    bottom: 135px; /* Adjust based on the thickness */
+    box-shadow: 5px -90px 50px 30px rgb(0, 0, 0, 0.538);
+}
+
+/* ------------------------------------------------- */
+
+.container .frame-left {
+    top: 110px;
+    left: 150px;
+    z-index: 0100;
+    animation: animate-left var(--time_dur) cubic-bezier(var(--animate_pattern)) infinite;
+}
+
+.container .frame-back {
+    top: 150px;
+    left: 350px;
+    transform: rotateY(180deg);
+    z-index: 0000;
+    animation: animate-back var(--time_dur) cubic-bezier(var(--animate_pattern)) infinite;
+}
+
+.container .frame-front {
+    top: 230px;
+    left: -50px;
+    z-index: 1111;
+    animation: animate-front var(--time_dur) cubic-bezier(var(--animate_pattern)) infinite;
+}
+
+.container .frame-right {
+    top: 110px;
+    left: 150px;
+    z-index: 0001;
+    animation: animate-right var(--time_dur) cubic-bezier(var(--animate_pattern)) infinite;
+}
+
+
+@keyframes animate-left {
+    0%, 5% {
+        --position: 0;
+        transform: scaleX(0.87) scaleY(0.88) rotateY(30deg);
+    }
+    20%, 35% {
+        --position: 20;
+        transform: scaleX(1) scaleY(1) translateX(calc(600px)) translateY(calc(110px));
+        z-index: 1111;
+    }
+    50%, 55% {
+        --position: 50;
+        transform: scaleX(0.87) scaleY(0.88) translateX(calc(1380px)) translateY(calc(1px)) rotateY(-30deg);
+        z-index: 1111;
+    }
+    70%, 75% {
+        --position: 70;
+        transform: scaleX(0.62) scaleY(0.71) translateX(calc(970px)) translateY(calc(-25px)) rotateY(180deg);
+        z-index: 0000;
+    }
+    100% {
+        --position: 100;
+        transform: scaleX(0.87) scaleY(0.88) rotateY(30deg);
+    }
+}
+
+@keyframes animate-back {
+    0%, 5% {
+        --position: 0;
+        transform: scaleX(0.62) scaleY(0.71) translateX(5px) translateY(-60px) rotateY(180deg);
+    }
+    20%, 35% {
+        --position: 20;
+        transform: scaleX(0.87) scaleY(0.88) translateX(-690px) translateY(-50px) rotateY(30deg);
+    }
+    50%, 55% {
+        --position: 50;
+        transform: scaleX(1) scaleY(1) translateX(1px) translateY(80px);
+        z-index: 1111;
+    }
+    70%, 75% {
+        --position: 70;
+        transform: scaleX(0.87) scaleY(0.88) translateX(690px) translateY(-50px) rotateY(-30deg);
+    }
+    100% {
+        --position: 100;
+        transform: scaleX(0.62) scaleY(0.71) translateX(5px) translateY(-60px) rotateY(180deg);
+    }
+}
+
+@keyframes animate-front {
+    0%, 5% {
+        --position: 0;
+        transform: scaleX(1) scaleY(1);
+    }
+    20%, 35% {
+        --position: 20;
+        transform: scaleX(0.87) scaleY(0.88) translateX(690px) translateY(-140px) rotateY(-30deg);
+    }
+    50%, 55% {
+        --position: 50;
+        transform: scaleX(0.62) scaleY(0.71) translateX(1px) translateY(-170px) rotateY(180deg);
+        z-index: 0000;
+    }
+    70%, 75% {
+        --position: 70;
+        transform: scaleX(0.87) scaleY(0.88) translateX(-690px) translateY(-140px) rotateY(30deg);
+    }
+    100% {
+        --position: 100;
+        transform: scaleY(1) translateX(1);
+    }
+}
+
+@keyframes animate-right {
+    0%, 5% {
+        --position: 0;
+        transform: scaleX(0.87) scaleY(0.88) rotateY(-30deg);
+    }
+    20%, 35% {
+        --position: 20;
+        transform: scaleX(0.62) scaleY(0.71) translateX(-960px) translateY(-10px) rotateY(180deg);
+        z-index: 0000;
+    }
+    50%, 55% {
+        --position: 50;
+        transform: scaleX(0.87) scaleY(0.88) translateX(-1380px) translateY(1px) rotateY(30deg);
+    }
+    70%, 75% {
+        --position: 70;
+        transform: scaleX(1) scaleY(1) translateX(-600px) translateY(110px);
+        z-index: 1111;
+    }
+    100% {
+        --position: 100;
+        transform: scaleX(0.87) scaleY(0.88) rotateY(-30deg);
+    }
+}
